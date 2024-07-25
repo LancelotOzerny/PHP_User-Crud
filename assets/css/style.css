@@ -21,3 +21,15 @@ html
     width: 64px;
     height: 64px;
 }
+a.squire-button
+{
+    aspect-ratio: 1 / 1;
+}
+.table-list-container
+{
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin-bottom: 50px;
+    overflow: auto;
+}

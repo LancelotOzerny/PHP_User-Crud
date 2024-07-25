@@ -43,32 +43,47 @@ while (($user = $dbList->fetch()) !== false)
     </div>
 
     <div class="container">
-        <table class="table">
-            <thead>
-                <tr>
+        <div class="table-list-container">
+            <table class="table table-hover table-borderless">
+                <thead>
+                <tr class="border-bottom">
                     <th scope="col">#</th>
                     <th scope="col">Логин</th>
                     <th scope="col">Почта</th>
                     <th scope="col"></th>
                 </tr>
-            </thead>
-            <tbody>
-            <?php foreach($userList as $user): ?>
-                <tr>
-                    <th><?= $user['ID'] ?></th>
-                    <td><?= $user['LOGIN'] ?></td>
-                    <td><?= $user['EMAIL'] ?></td>
-                    <td>
-                        <li class="list-inline-item">
-                            <a href="/project/edit/?id=<?= $user['ID'] ?>" class="btn btn-primary btn-sm rounded-1" title="Edit">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        </li>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach($userList as $user): ?>
+                    <tr>
+                        <th><?= $user['ID'] ?></th>
+                        <td><?= $user['LOGIN'] ?></td>
+                        <td><?= $user['EMAIL'] ?></td>
+                        <td>
+                            <div class="list-inline-item d-flex justify-content-end">
+                                <a href="/user/edit/?id=<?= $user['ID'] ?>"
+                                   class="btn btn-secondary btn-sm rounded-1 text-uppercase"
+                                   title="Edit">
+                                    Редактировать
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="list-inline-item d-flex justify-content-end">
+                    <a href="/user/create ?>"
+                       class="btn btn-success btn-sm rounded-1 text-uppercase"
+                       title="Create">
+                        Создать
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
