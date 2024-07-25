@@ -1,5 +1,5 @@
 <?php
-    $userList = [];
+    $userList = $data['USER_LIST'] ?? [];
 ?>
 <div class="container">
     <div class="row col-12">
