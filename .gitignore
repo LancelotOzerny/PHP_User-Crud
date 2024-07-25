@@ -3,3 +3,4 @@
 *.test.php
 *.log
 *.txt
+app/config.php
