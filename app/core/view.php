@@ -1,5 +1,6 @@
 <?php
 namespace App\Core;
+use App\Core\Template;
 
 class View
 {
@@ -9,7 +10,9 @@ class View
         $viewPath = "$HOME/app/views/view_$view.php";
         if (file_exists($viewPath))
         {
+            Template::Instance()->IncludeHeader($template);
             include $viewPath;
+            Template::Instance()->IncludeFooter($template);
             return;
         }
 
