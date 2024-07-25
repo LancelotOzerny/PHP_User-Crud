@@ -12,9 +12,9 @@ class UserTable
         while (($user = $dbList->fetch()) !== false)
         {
             $users[] = [
-                'ID' => $user['id'],
-                'LOGIN' => $user['login'],
-                'EMAIL' => $user['email'],
+                'ID' => $user['id'] ?? '',
+                'LOGIN' => $user['login'] ?? '',
+                'EMAIL' => $user['email'] ?? '',
             ];
         }
 
@@ -31,8 +31,21 @@ class UserTable
 
     }
 
-    public static function getById(int $id) : void
+    public static function getById(int $id) : array
     {
+        $user = [];
+        $prepare = Database::getConnection()->prepare('SELECT * FROM Users WHERE id = :id');
+        $prepare->bindValue(':id', $id);
 
+        if ($prepare->execute())
+        {
+            $dbUser = $prepare->fetch();
+
+            $user['ID'] = $dbUser['id'];
+            $user['LOGIN'] = $dbUser['login'];
+            $user['EMAIL'] = $dbUser['email'];
+            $user['PASSWORD'] = $dbUser['password'];
+        }
+        return $user;
     }
 }

@@ -26,6 +26,7 @@ class Controller_User extends \App\Core\Controller
 
     public function action_edit()
     {
-        $this->view->generate('user_edit', 'crud');
+        $data = $this->model->getEditData();
+        $this->view->generate('user_edit', 'crud', $data);
     }
 }
