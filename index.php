@@ -9,12 +9,20 @@
 
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
     <script src="assets/js/jQuery.js"></script>
     <script src="assets/js/bootstrap.js"></script>
 </head>
 <body>
-    <div class="preloader">
+    <div id="preloader">
         <img src="assets/img/spinner.gif" alt="wait some time...">
     </div>
+
+    <script>
+        $(document).ready(() => {
+            $("#preloader").remove();
+        });
+    </script>
 </body>
 </html>
