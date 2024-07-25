@@ -1,9 +1,10 @@
 <?php
     $user = $data['USER'] ?? null;
 
-    if ($user === null)
+    if ($user === null || empty($user))
     {
-        echo 'Пользователь не найден';
+        echo '<div class="container display-6 mt-3">Пользователь не найден</div>';
+        return;
     }
 ?>
 

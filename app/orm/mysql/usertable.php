@@ -41,6 +41,11 @@ class UserTable
         {
             $dbUser = $prepare->fetch();
 
+            if ($dbUser === false)
+            {
+                return $user;
+            }
+
             $user['ID'] = $dbUser['id'];
             $user['LOGIN'] = $dbUser['login'];
             $user['EMAIL'] = $dbUser['email'];
