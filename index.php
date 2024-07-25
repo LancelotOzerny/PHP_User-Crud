@@ -1,3 +1,18 @@
+<?php
+$connection = new PDO('mysql:host=localhost;dbname=petprojects', 'root', '');
+$dbList = $connection->query('SELECT * FROM Users');
+
+$userList = [];
+while (($user = $dbList->fetch()) !== false)
+{
+    $userList[] = [
+        'ID' => $user['id'],
+        'LOGIN' => $user['login'],
+        'EMAIL' => $user['email'],
+    ];
+}
+?>
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -38,18 +53,20 @@
                 </tr>
             </thead>
             <tbody>
+            <?php foreach($userList as $user): ?>
                 <tr>
-                    <th>0</th>
-                    <td>Lancelot</td>
-                    <td>lancelot.ozernuy@gmail.com</td>
+                    <th><?= $user['ID'] ?></th>
+                    <td><?= $user['LOGIN'] ?></td>
+                    <td><?= $user['EMAIL'] ?></td>
                     <td>
                         <li class="list-inline-item">
-                            <a href="#" class="btn btn-primary btn-sm rounded-1" title="Edit">
+                            <a href="/project/edit/?id=<?= $user['ID'] ?>" class="btn btn-primary btn-sm rounded-1" title="Edit">
                                 <i class="fa fa-edit"></i>
                             </a>
                         </li>
                     </td>
                 </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>
