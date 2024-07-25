@@ -41,7 +41,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="list-inline-item d-flex justify-content-end">
-                <a href="/user/create ?>"
+                <a href="/user/create"
                    class="btn btn-success btn-sm rounded-1 text-uppercase"
                    title="Create">
                     Создать

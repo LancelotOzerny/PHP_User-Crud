@@ -1,12 +1,12 @@
 <?php
 use App\Core\Model;
+use App\Core\Database;
 
 class Model_User extends Model
 {
     public function getListData()
     {
-        $connection = new PDO('mysql:host=localhost;dbname=petprojects', 'root', '');
-        $dbList = $connection->query('SELECT * FROM Users');
+        $dbList = Database::getConnection()->query('SELECT * FROM Users');
 
         $data['USER_LIST'] = [];
         while (($user = $dbList->fetch()) !== false)
