@@ -21,7 +21,8 @@ class Controller_User extends \App\Core\Controller
 
     public function action_create()
     {
-        $this->view->generate('user_create', 'crud');
+        $data = $this->model->getCreateUserData();
+        $this->view->generate('user_create', 'crud', $data);
     }
 
     public function action_edit()
