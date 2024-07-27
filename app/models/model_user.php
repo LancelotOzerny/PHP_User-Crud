@@ -145,6 +145,17 @@ class Model_User extends Model
     public function getEditData() : array
     {
         $user_id = intval($_GET['id']);
+
+        if (isset($_POST['update-user']))
+        {
+            $updateData = [
+                'EMAIL' => $_POST['user-email'],
+                'LOGIN' => $_POST['user-login'],
+            ];
+
+            UserTable::update($user_id, $updateData);
+        }
+
         $user = UserTable::getById($user_id);
 
         return [

@@ -141,7 +141,7 @@
                 </div>
 
                 <div class="d-inline mx-2">
-                    <button type="submit" name="create-user" class="d-inline form-control btn btn-primary btn-sm rounded-1 text-uppercase">
+                    <button type="submit" name="update-user" class="d-inline form-control btn btn-primary btn-sm rounded-1 text-uppercase">
                         Сохранить
                     </button>
                 </div>
