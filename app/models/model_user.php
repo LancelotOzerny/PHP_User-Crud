@@ -48,6 +48,7 @@ class Model_User extends Model
     {
         $errors = [];
 
+        // EMAIL
         if (empty($data['EMAIL']))
         {
             $errors['EMAIL'][] = 'Поле не может быть пустым!';
@@ -56,25 +57,30 @@ class Model_User extends Model
         {
             $errors['EMAIL'][] = 'Email введен некорректно!';
         }
+        else if (count(UserTable::getByEmail($data['EMAIL'])) > 0)
+        {
+            $errors['EMAIL'][] = 'Пользователь с таким email уже существует!';
+        }
 
+        // LOGIN
         if (empty($data['LOGIN']))
         {
             $errors['LOGIN'][] = 'Поле не может быть пустым!';
         }
-        else
+        else if (strlen($data['LOGIN']) < 4 || strlen($data['LOGIN']) > 16)
         {
-            $len = strlen($data['LOGIN']);
-            if ($len < 4 || $len > 16)
-            {
-                $errors['LOGIN'][] = 'Логин должен содержать от 4 и до 16 символов!';
-            }
-
-            if (!preg_match('/^[A-Za-z0-9]/', $data['LOGIN']))
-            {
-                $errors['LOGIN'][] = 'Логин может содержать только латинские буквы и цифры!';
-            }
+            $errors['LOGIN'][] = 'Логин должен содержать от 4 и до 16 символов!';
+        }
+        else if (!preg_match('/^[A-Za-z0-9]/', $data['LOGIN']))
+        {
+            $errors['LOGIN'][] = 'Логин может содержать только латинские буквы и цифры!';
+        }
+        else if (empty(UserTable::getByLogin($data['LOGIN'])) === false)
+        {
+            $errors['LOGIN'][] = 'Пользователь с таким логином уже существует!';
         }
 
+        // PASSWORD
         if (empty($data['PASSWORD']))
         {
             $errors['PASSWORD'][] = 'Поле не может быть пустым!';
@@ -94,6 +100,7 @@ class Model_User extends Model
             }
         }
 
+        // PASSWORD REPEAT
         if ($data['PASSWORD'] !== $data['PASSWORD_REPEAT'])
         {
             $errors['PASSWORD_REPEAT'][] = 'Пароль и повторный пароль должны быть одинаковыми!';

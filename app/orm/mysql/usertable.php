@@ -15,6 +15,7 @@ class UserTable
                 'ID' => $user['id'] ?? '',
                 'LOGIN' => $user['login'] ?? '',
                 'EMAIL' => $user['email'] ?? '',
+                'PASSWORD' => $user['password'] ?? '',
             ];
         }
 
@@ -30,6 +31,46 @@ class UserTable
         $prepare->bindValue(':password', $params['PASSWORD']);
 
         $prepare->execute();
+    }
+
+    public static function getByEmail(string $email) : array
+    {
+        $prepare = Database::getConnection()->prepare('SELECT * FROM Users WHERE email = :email');
+        $prepare->bindValue(':email', $email);
+        $prepare->execute();
+
+        $users = [];
+        foreach ($prepare as $row)
+        {
+            $users[] = [
+                'ID' => $row['id'] ?? '',
+                'LOGIN' => $row['login'] ?? '',
+                'EMAIL' => $row['email'] ?? '',
+                'PASSWORD' => $row['password'] ?? '',
+            ];
+        }
+
+        return $users;
+    }
+
+    public static function getByLogin(string $login) : array
+    {
+        $prepare = Database::getConnection()->prepare('SELECT * FROM Users WHERE login = :login');
+        $prepare->bindValue(':login', $login);
+        $prepare->execute();
+
+        $users = [];
+        foreach ($prepare as $row)
+        {
+            $users[] = [
+                'ID' => $row['id'] ?? '',
+                'LOGIN' => $row['login'] ?? '',
+                'EMAIL' => $row['email'] ?? '',
+                'PASSWORD' => $row['password'] ?? '',
+            ];
+        }
+
+        return $users;
     }
 
     public static function deleteById(int $id) : void
