@@ -112,8 +112,16 @@ $data = $data ?? [];
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="list-inline-item d-flex justify-content-center">
+            <div class="list-inline-item d-flex justify-content-center mx-2s">
                 <div class="d-inline">
+                    <a href="/user/">
+                        <button type="button" class="d-inline btn btn-secondary btn-sm rounded-1 text-uppercase">
+                            Список
+                        </button>
+                    </a>
+                </div>
+
+                <div class="d-inline mx-2">
                     <button type="submit" name="create-user" class="d-inline form-control btn btn-primary btn-sm rounded-1 text-uppercase">
                         Создать
                     </button>
