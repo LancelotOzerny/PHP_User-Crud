@@ -1,8 +1,4 @@
 <?php
-    echo '<pre>';
-    print_r($_SESSION);
-    echo '</pre>';
-
     $userList = $data['USER_LIST'] ?? [];
 ?>
 <div class="container">
@@ -16,6 +12,16 @@
         <div class="row mb-2">
             <?php foreach($data['SUCCESS'] as $message) : ?>
                 <div class="col-auto mx-auto alert alert-success">
+                    <?= $message ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if(empty($data['ERRORS']) === false): ?>
+        <div class="row mb-2">
+            <?php foreach($data['ERRORS'] as $message) : ?>
+                <div class="col-auto mx-auto alert alert-danger">
                     <?= $message ?>
                 </div>
             <?php endforeach; ?>
