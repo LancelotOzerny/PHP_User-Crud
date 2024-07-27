@@ -28,7 +28,11 @@ class Model_User extends Model
 
             if (empty($data['ERRORS']))
             {
-                UserTable::create($userData);
+                UserTable::create([
+                    'LOGIN' => $userData['LOGIN'],
+                    'EMAIL' => $userData['EMAIL'],
+                    'PASSWORD' => password_hash($userData['PASSWORD'], PASSWORD_DEFAULT),
+                ]);
             }
 
             $data['USER'] = [

@@ -23,7 +23,13 @@ class UserTable
 
     public static function create(array $params = []) : void
     {
+        $prepare = Database::getConnection()->prepare(
+            'INSERT INTO Users (`email`, `login`, `password`) VALUES (:email, :login, :password)');
+        $prepare->bindValue(':email', $params['EMAIL']);
+        $prepare->bindValue(':login', $params['LOGIN']);
+        $prepare->bindValue(':password', $params['PASSWORD']);
 
+        $prepare->execute();
     }
 
     public static function deleteById(int $id) : void
