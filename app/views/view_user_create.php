@@ -12,7 +12,7 @@ $data = $data ?? [];
 
 <hr class="my-3">
 
-<form method="post" class="container my-5" style="max-width: 640px">
+<form action="/user/create/" method="post" class="container my-5" style="max-width: 640px">
     <?php if(empty($data['SUCCESS']) === false): ?>
         <div class="row mb-2">
             <?php foreach($data['SUCCESS'] as $message) : ?>
@@ -69,7 +69,7 @@ $data = $data ?? [];
         <hr class="my-4">
         <div class="row">
             <label for="inputPasswordField" class="form-label">Пароль</label>
-            <input type="test"
+            <input type="password"
                    name="user-password"
                    id="inputPasswordField"
                    class="form-control d-inline"

@@ -15,6 +15,12 @@ class Model_User extends Model
     {
         $data = [];
 
+        if (isset($_SESSION['user-created']) && $_SESSION['user-created'] === 'Y')
+        {
+            $data['SUCCESS'][] = 'Создан новый пользователь!';
+            unset($_SESSION['user-created']);
+        }
+
         if (isset($_POST['create-user']))
         {
             $userData = [
@@ -33,6 +39,9 @@ class Model_User extends Model
                     'EMAIL' => $userData['EMAIL'],
                     'PASSWORD' => password_hash($userData['PASSWORD'], PASSWORD_DEFAULT),
                 ]);
+
+                $_SESSION['user-created'] = 'Y';
+                header('Location:/user/create/');
             }
 
             $data['USER'] = [
