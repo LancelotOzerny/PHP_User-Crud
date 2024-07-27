@@ -81,7 +81,7 @@ $data = $data ?? [];
         <div class="col-md-12">
             <div class="list-inline-item d-flex justify-content-center">
                 <div class="d-inline">
-                    <button type="submit" class="d-inline form-control btn btn-primary btn-sm rounded-1 text-uppercase">
+                    <button type="submit" name="create-user" class="d-inline form-control btn btn-primary btn-sm rounded-1 text-uppercase">
                         Создать
                     </button>
                 </div>

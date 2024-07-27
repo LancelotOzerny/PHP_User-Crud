@@ -11,6 +11,15 @@ class Model_User extends Model
         return $data;
     }
 
+    public function getCreateUserData() : array
+    {
+        if (isset($_POST['create-user']))
+        {
+            echo 'Создание пользователя...';
+        }
+        return [];
+    }
+
     public function getEditData() : array
     {
         $user_id = intval($_GET['id']);
