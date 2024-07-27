@@ -18,13 +18,23 @@ class Model_User extends Model
         if (isset($_POST['create-user']))
         {
             $userData = [
-                'EMAIL' => trim($_POST['user-email']),
-                'LOGIN' => trim($_POST['user-login']),
-                'PASSWORD' => trim($_POST['user-password']),
-                'PASSWORD_REPEAT' => trim($_POST['user-password-repeat']),
+                'EMAIL' => htmlspecialchars(trim($_POST['user-email'])),
+                'LOGIN' => htmlspecialchars(trim($_POST['user-login'])),
+                'PASSWORD' => htmlspecialchars(trim($_POST['user-password'])),
+                'PASSWORD_REPEAT' => htmlspecialchars(trim($_POST['user-password-repeat'])),
             ];
 
             $data['ERRORS'] = $this->getUserCreateDataErrors($userData);
+
+            if (empty($data['ERRORS']))
+            {
+                UserTable::create($userData);
+            }
+
+            $data['USER'] = [
+                'LOGIN' => $userData['LOGIN'],
+                'EMAIL' => $userData['EMAIL'],
+            ];
         }
 
         return $data;
