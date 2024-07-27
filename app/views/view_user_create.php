@@ -1,5 +1,9 @@
 <?php
 $data = $data ?? [];
+
+echo '<pre>';
+print_r($data);
+echo '</pre>';
 ?>
 
 <div class="container">
@@ -32,9 +36,18 @@ $data = $data ?? [];
                    class="form-control d-inline"
                    aria-describedby="inputEmailHelpArea"
                    value="">
+
             <div id="inputEmailHelpArea" class="form-text">
                 Введите корректный email который содержит знак '@'.
             </div>
+
+            <?php if(isset($data['ERRORS']['EMAIL'])): ?>
+                <div class="form-errors">
+                    <?php foreach($data['ERRORS']['EMAIL'] as $error): ?>
+                        <div class="form-text text-danger"><?= $error ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
 
         <div class="row mb-2">
@@ -48,6 +61,14 @@ $data = $data ?? [];
             <div id="inputLoginHelpArea" class="form-text">
                 Логин должен быть уникальным и содержать от 4 до 16 символов.
             </div>
+
+            <?php if(isset($data['ERRORS']['LOGIN'])): ?>
+                <div class="form-errors">
+                    <?php foreach($data['ERRORS']['LOGIN'] as $error): ?>
+                        <div class="form-text text-danger"><?= $error ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
 
         <div class="row mb-2">
@@ -61,6 +82,14 @@ $data = $data ?? [];
             <div id="inputPasswordHelpArea" class="form-text">
                 Пароль должен иметь длинну от 8 до 16 знаков и состоять их нижнего подчеркивания, цифр и латинских букв.
             </div>
+
+            <?php if(isset($data['ERRORS']['PASSWORD'])): ?>
+                <div class="form-errors">
+                    <?php foreach($data['ERRORS']['PASSWORD'] as $error): ?>
+                        <div class="form-text text-danger"><?= $error ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
 
         <div class="row mb-2">
@@ -75,6 +104,14 @@ $data = $data ?? [];
                 Ну... Бывают случаи, когда в пароле букву пропустили. На всякий случай введите его еще раз.
             </div>
         </div>
+
+        <?php if(isset($data['ERRORS']['PASSWORD_REPEAT'])): ?>
+            <div class="form-errors">
+                <?php foreach($data['ERRORS']['PASSWORD_REPEAT'] as $error): ?>
+                    <div class="form-text text-danger"><?= $error ?></div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </div>
 
     <div class="row mt-5">
