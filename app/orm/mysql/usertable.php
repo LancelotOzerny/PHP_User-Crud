@@ -73,9 +73,11 @@ class UserTable
         return $users;
     }
 
-    public static function deleteById(int $id) : void
+    public static function deleteById(int $id) : bool
     {
-
+        $prepare = Database::getConnection()->prepare('DELETE FROM Users WHERE id = :id');
+        $prepare->bindValue(':id', $id);
+        return $prepare->execute();
     }
 
     public static function getById(int $id) : array
