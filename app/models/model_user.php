@@ -43,19 +43,28 @@ class Model_User extends Model
                 'PASSWORD_REPEAT' => htmlspecialchars(trim($_POST['user-password-repeat'])),
             ];
 
-            $data['ERRORS'] = $this->getUserCreateDataErrors($userData);
+            $validator = new Validator($userData);
+            $data['ERRORS']['EMAIL'] = $validator->getEmailErrors();
+            $data['ERRORS']['LOGIN'] = $validator->getLoginErrors();
+            $data['ERRORS']['PASSWORD'] = $validator->getPasswordErrors();
+            $data['ERRORS']['PASSWORD_REPEAT'] = $validator->getPasswordRepeatErrors();
 
-            if (empty($data['ERRORS']))
+            foreach ($data['ERRORS'] as $errorGroup)
             {
-                UserTable::create([
-                    'LOGIN' => $userData['LOGIN'],
-                    'EMAIL' => $userData['EMAIL'],
-                    'PASSWORD' => password_hash($userData['PASSWORD'], PASSWORD_DEFAULT),
-                ]);
-
-                $_SESSION['user-created'] = 'Y';
-                header('Location:/user/create/');
+                if (empty($errorGroup) === false)
+                {
+                    return $data;
+                }
             }
+
+            UserTable::create([
+                'LOGIN' => $userData['LOGIN'],
+                'EMAIL' => $userData['EMAIL'],
+                'PASSWORD' => password_hash($userData['PASSWORD'], PASSWORD_DEFAULT),
+            ]);
+
+            $_SESSION['user-created'] = 'Y';
+            header('Location:/user/create/');
 
             $data['USER'] = [
                 'LOGIN' => $userData['LOGIN'],
@@ -76,72 +85,6 @@ class Model_User extends Model
         }
         header('Location:/user/list/');
     }
-
-    public function getUserCreateDataErrors(array $data) : array
-    {
-        $errors = [];
-
-        // EMAIL
-        if (empty($data['EMAIL']))
-        {
-            $errors['EMAIL'][] = 'Поле не может быть пустым!';
-        }
-        else if (!filter_var($data['EMAIL'], FILTER_VALIDATE_EMAIL))
-        {
-            $errors['EMAIL'][] = 'Email введен некорректно!';
-        }
-        else if (count(UserTable::getByEmail($data['EMAIL'])) > 0)
-        {
-            $errors['EMAIL'][] = 'Пользователь с таким email уже существует!';
-        }
-
-        // LOGIN
-        if (empty($data['LOGIN']))
-        {
-            $errors['LOGIN'][] = 'Поле не может быть пустым!';
-        }
-        else if (strlen($data['LOGIN']) < 4 || strlen($data['LOGIN']) > 16)
-        {
-            $errors['LOGIN'][] = 'Логин должен содержать от 4 и до 16 символов!';
-        }
-        else if (!preg_match('/^[A-Za-z0-9]/', $data['LOGIN']))
-        {
-            $errors['LOGIN'][] = 'Логин может содержать только латинские буквы и цифры!';
-        }
-        else if (empty(UserTable::getByLogin($data['LOGIN'])) === false)
-        {
-            $errors['LOGIN'][] = 'Пользователь с таким логином уже существует!';
-        }
-
-        // PASSWORD
-        if (empty($data['PASSWORD']))
-        {
-            $errors['PASSWORD'][] = 'Поле не может быть пустым!';
-        }
-        else
-        {
-            $len = strlen($data['PASSWORD']);
-            if ($len < 8 || $len > 20)
-            {
-                $errors['PASSWORD'][] = 'Пароль должен содержать от 8 и до 20 символов!';
-            }
-
-            if (!preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[_]).*$/', $data['PASSWORD']))
-            {
-                $errors['PASSWORD'][] = 'Пароль должен включать знак нижнего подчеркивания, латинские символы в 
-                верхнем и нижнем регистре а также цифры!';
-            }
-        }
-
-        // PASSWORD REPEAT
-        if ($data['PASSWORD'] !== $data['PASSWORD_REPEAT'])
-        {
-            $errors['PASSWORD_REPEAT'][] = 'Пароль и повторный пароль должны быть одинаковыми!';
-        }
-
-        return $errors;
-    }
-
     public function getEditData() : array
     {
         $user_id = intval($_GET['id']);
@@ -161,5 +104,92 @@ class Model_User extends Model
         return [
             'USER' => $user,
         ];
+    }
+}
+
+class Validator
+{
+    private array $data = [];
+    public function __construct(array $validate_data)
+    {
+        $this->data = $validate_data;
+    }
+    public function getEmailErrors() : array
+    {
+        $errors = [];
+
+        if (empty($this->data['EMAIL']))
+        {
+            $errors[] = 'Поле не может быть пустым!';
+        }
+        else if (!filter_var($this->data['EMAIL'], FILTER_VALIDATE_EMAIL))
+        {
+            $errors[] = 'Email введен некорректно!';
+        }
+        else if (count(UserTable::getByEmail($this->data['EMAIL'])) > 0)
+        {
+            $errors[] = 'Пользователь с таким email уже существует!';
+        }
+
+        return $errors;
+    }
+    public function getLoginErrors() : array
+    {
+        $errors = [];
+
+        if (empty($this->data['LOGIN']))
+        {
+            $errors[] = 'Поле не может быть пустым!';
+        }
+        else if (strlen($this->data['LOGIN']) < 4 || strlen($this->data['LOGIN']) > 16)
+        {
+            $errors[] = 'Логин должен содержать от 4 и до 16 символов!';
+        }
+        else if (!preg_match('/^[A-Za-z0-9]/', $this->data['LOGIN']))
+        {
+            $errors[] = 'Логин может содержать только латинские буквы и цифры!';
+        }
+        else if (empty(UserTable::getByLogin($this->data['LOGIN'])) === false)
+        {
+            $errors[] = 'Пользователь с таким логином уже существует!';
+        }
+
+        return $errors;
+    }
+    public function getPasswordErrors() : array
+    {
+        $errors = [];
+
+        if (empty($this->data['PASSWORD']))
+        {
+            $errors[] = 'Поле не может быть пустым!';
+        }
+        else
+        {
+            $len = strlen($this->data['PASSWORD']);
+            if ($len < 8 || $len > 20)
+            {
+                $errors[] = 'Пароль должен содержать от 8 и до 20 символов!';
+            }
+
+            if (!preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[_]).*$/', $this->data['PASSWORD']))
+            {
+                $errors[] = 'Пароль должен включать знак нижнего подчеркивания, латинские символы в 
+                верхнем и нижнем регистре а также цифры!';
+            }
+        }
+
+        return $errors;
+    }
+    public function getPasswordRepeatErrors() : array
+    {
+        $errors = [];
+
+        if ($this->data['PASSWORD'] !== $this->data['PASSWORD_REPEAT'])
+        {
+            $errors[] = 'Пароль и повторный пароль должны быть одинаковыми!';
+        }
+
+        return $errors;
     }
 }
