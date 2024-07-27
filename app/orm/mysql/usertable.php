@@ -5,7 +5,7 @@ use App\Core\Database;
 
 class UserTable
 {
-    public static function getList(array $params = []) : array
+    public static function getList() : array
     {
         $dbList = Database::getConnection()->query('SELECT * FROM Users');
         $users = [];
@@ -20,6 +20,30 @@ class UserTable
         }
 
         return $users;
+    }
+
+    public static function update(int $id, array $params) : bool
+    {
+        $values = [];
+        foreach ($params as $key => $value)
+        {
+            $lower = mb_strtolower($key);
+            $values[] = "$lower = :$lower";
+        }
+
+        $sql = 'UPDATE Users SET ';
+        $sql .= join(", ", $values);
+        $sql .= ' WHERE id = :id';
+
+        $prepare = Database::getConnection()->prepare($sql);
+        $prepare->bindValue(':id', $id);
+        foreach ($params as $key => $value)
+        {
+            $lower = mb_strtolower($key);
+            $prepare->bindValue(":$lower", $value);
+        }
+
+        return $prepare->execute();
     }
 
     public static function create(array $params = []) : void
