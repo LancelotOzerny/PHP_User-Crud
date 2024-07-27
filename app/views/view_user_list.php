@@ -1,4 +1,8 @@
 <?php
+    echo '<pre>';
+    print_r($_SESSION);
+    echo '</pre>';
+
     $userList = $data['USER_LIST'] ?? [];
 ?>
 <div class="container">
@@ -8,6 +12,16 @@
 </div>
 
 <div class="container">
+    <?php if(empty($data['SUCCESS']) === false): ?>
+        <div class="row mb-2">
+            <?php foreach($data['SUCCESS'] as $message) : ?>
+                <div class="col-auto mx-auto alert alert-success">
+                    <?= $message ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
     <div class="table-list-container">
         <table class="table table-hover table-borderless">
             <thead>
@@ -25,12 +39,20 @@
                     <td><?= $user['LOGIN'] ?></td>
                     <td><?= $user['EMAIL'] ?></td>
                     <td>
-                        <div class="list-inline-item d-flex justify-content-end">
-                            <a href="/user/edit/?id=<?= $user['ID'] ?>"
-                               class="btn btn-secondary btn-sm rounded-1 text-uppercase"
-                               title="Edit">
-                                Редактировать
-                            </a>
+                        <div class="btn-group d-flex justify-content-end">
+                            <div class="list-inline-item">
+                                <a href="/user/edit/?id=<?= $user['ID'] ?>"
+                                   class="btn btn-secondary btn-sm rounded-1 text-uppercase"
+                                   title="Edit">
+                                    Редактировать
+                                </a>
+                            </div>
+
+                            <form action="/user/delete/" method="post" class="list-inline-item">
+                                <input type="hidden" value="<?= $user['ID'] ?>" name="delete-id" />
+                                <input class="btn bg-danger text-white btn-sm rounded-1 text-uppercase"
+                                       type="submit" value="Удалить">
+                            </form>
                         </div>
                     </td>
                 </tr>
