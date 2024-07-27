@@ -1,9 +1,5 @@
 <?php
 $data = $data ?? [];
-
-echo '<pre>';
-print_r($data);
-echo '</pre>';
 ?>
 
 <div class="container">
@@ -28,7 +24,7 @@ echo '</pre>';
     <?php endif; ?>
 
     <div class="row mb-2">
-        <div class="row mb-2">
+        <div class="row">
             <label for="inputEmailField" class="form-label">Your@email</label>
             <input type="text"
                    name="user-email"
@@ -49,8 +45,8 @@ echo '</pre>';
                 </div>
             <?php endif; ?>
         </div>
-
-        <div class="row mb-2">
+        <hr class="my-4">
+        <div class="row">
             <label for="inputLoginField" class="form-label">Логин</label>
             <input type="text"
                    name="user-login"
@@ -59,7 +55,7 @@ echo '</pre>';
                    aria-describedby="inputLoginHelpArea"
                    value="">
             <div id="inputLoginHelpArea" class="form-text">
-                Логин должен быть уникальным и содержать от 4 до 16 символов.
+                Логин должен быть уникальным и содержать от 4 до 16 латинских букв и цифр.
             </div>
 
             <?php if(isset($data['ERRORS']['LOGIN'])): ?>
@@ -70,17 +66,18 @@ echo '</pre>';
                 </div>
             <?php endif; ?>
         </div>
-
-        <div class="row mb-2">
+        <hr class="my-4">
+        <div class="row">
             <label for="inputPasswordField" class="form-label">Пароль</label>
-            <input type="password"
+            <input type="test"
                    name="user-password"
                    id="inputPasswordField"
                    class="form-control d-inline"
                    aria-describedby="inputPasswordHelpArea"
                    value="">
             <div id="inputPasswordHelpArea" class="form-text">
-                Пароль должен иметь длинну от 8 до 16 знаков и состоять их нижнего подчеркивания, цифр и латинских букв.
+                Пароль должен содержать от 8 до 20 знаков и включать нижнее подчеркивание,
+                латинские символы в верхнем и нижнем регистре, цифры.
             </div>
 
             <?php if(isset($data['ERRORS']['PASSWORD'])): ?>
@@ -91,8 +88,8 @@ echo '</pre>';
                 </div>
             <?php endif; ?>
         </div>
-
-        <div class="row mb-2">
+        <hr class="my-4">
+        <div class="row mb-4">
             <label for="inputPasswordRepeatField" class="form-label">Подтверждение пароля</label>
             <input type="password"
                    name="user-password-repeat"
@@ -103,17 +100,17 @@ echo '</pre>';
             <div id="inputPasswordRepeatHelpArea" class="form-text">
                 Ну... Бывают случаи, когда в пароле букву пропустили. На всякий случай введите его еще раз.
             </div>
+
+            <?php if(isset($data['ERRORS']['PASSWORD_REPEAT'])): ?>
+                <div class="form-errors">
+                    <?php foreach($data['ERRORS']['PASSWORD_REPEAT'] as $error): ?>
+                        <div class="form-text text-danger"><?= $error ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
-
-        <?php if(isset($data['ERRORS']['PASSWORD_REPEAT'])): ?>
-            <div class="form-errors">
-                <?php foreach($data['ERRORS']['PASSWORD_REPEAT'] as $error): ?>
-                    <div class="form-text text-danger"><?= $error ?></div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
     </div>
-
+    <hr class="my-4">
     <div class="row mt-5">
         <div class="col-md-12">
             <div class="list-inline-item d-flex justify-content-center">
