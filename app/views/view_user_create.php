@@ -31,7 +31,7 @@ $data = $data ?? [];
                    id="inputEmailField"
                    class="form-control d-inline"
                    aria-describedby="inputEmailHelpArea"
-                   value="">
+                   value="<?= $data['USER']['EMAIL'] ?? '' ?>">
 
             <div id="inputEmailHelpArea" class="form-text">
                 Введите корректный email который содержит знак '@'.
@@ -53,7 +53,7 @@ $data = $data ?? [];
                    id="inputLoginField"
                    class="form-control d-inline"
                    aria-describedby="inputLoginHelpArea"
-                   value="">
+                   value="<?= $data['USER']['LOGIN'] ?? '' ?>">
             <div id="inputLoginHelpArea" class="form-text">
                 Логин должен быть уникальным и содержать от 4 до 16 латинских букв и цифр.
             </div>
@@ -110,7 +110,6 @@ $data = $data ?? [];
             <?php endif; ?>
         </div>
     </div>
-    <hr class="my-4">
     <div class="row mt-5">
         <div class="col-md-12">
             <div class="list-inline-item d-flex justify-content-center">
