@@ -45,7 +45,7 @@ $data = $data ?? [];
                 </div>
             <?php endif; ?>
         </div>
-        <hr class="my-4">
+        <hr class="my-3">
         <div class="row">
             <label for="inputLoginField" class="form-label">Логин</label>
             <input type="text"
@@ -66,7 +66,7 @@ $data = $data ?? [];
                 </div>
             <?php endif; ?>
         </div>
-        <hr class="my-4">
+        <hr class="my-3">
         <div class="row">
             <label for="inputPasswordField" class="form-label">Пароль</label>
             <input type="password"
@@ -88,8 +88,8 @@ $data = $data ?? [];
                 </div>
             <?php endif; ?>
         </div>
-        <hr class="my-4">
-        <div class="row mb-4">
+        <hr class="my-3">
+        <div class="row mb-3">
             <label for="inputPasswordRepeatField" class="form-label">Подтверждение пароля</label>
             <input type="password"
                    name="user-password-repeat"
@@ -110,7 +110,7 @@ $data = $data ?? [];
             <?php endif; ?>
         </div>
     </div>
-    <div class="row mt-5">
+    <div class="row">
         <div class="col-md-12">
             <div class="list-inline-item d-flex justify-content-center">
                 <div class="d-inline">
