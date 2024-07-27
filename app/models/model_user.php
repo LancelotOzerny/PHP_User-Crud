@@ -7,6 +7,19 @@ class Model_User extends Model
     public function getListData() : array
     {
         $data = [];
+        if (isset($_SESSION['USER_DELETED']))
+        {
+            if ($_SESSION['USER_DELETED'] === 'Y')
+            {
+                $data['SUCCESS'][] = 'Удаление пользователя прошло успешно!';
+            }
+
+            if ($_SESSION['USER_DELETED'] === 'N')
+            {
+                $data['ERRORS'][] = 'Удаление пользователя не удалось';
+            }
+            unset($_SESSION['USER_DELETED']);
+        }
         $data['USER_LIST'] = UserTable::getList();
         return $data;
     }
@@ -51,6 +64,17 @@ class Model_User extends Model
         }
 
         return $data;
+    }
+
+    public function deleteUser()
+    {
+        if (isset($_POST['delete-id']))
+        {
+            $id = intval($_POST['delete-id']);
+            $deleted = UserTable::deleteById($id);
+            $_SESSION['USER_DELETED'] = $deleted ? 'Y' : 'N';
+        }
+        header('Location:/user/list/');
     }
 
     public function getUserCreateDataErrors(array $data) : array
