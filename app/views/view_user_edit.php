@@ -6,6 +6,14 @@
         echo '<div class="container display-6 mt-3">Пользователь не найден</div>';
         return;
     }
+
+    $email = isset($data['UPDATE_DATA']) ? $data['UPDATE_DATA']['EMAIL'] : ($data['USER']['EMAIL'] ?? '');
+    $login = isset($data['UPDATE_DATA']) ? $data['UPDATE_DATA']['LOGIN'] : ($data['USER']['LOGIN'] ?? '');
+    $checked = '';
+    if (isset($data['UPDATE_DATA']) && $data['UPDATE_DATA']['PASSWORD_CHANGED'] === 'Y')
+    {
+        $checked = 'checked';
+    }
 ?>
 
 <div class="container">
@@ -37,7 +45,7 @@
                    id="inputEmailField"
                    class="form-control d-inline"
                    aria-describedby="inputEmailHelpArea"
-                   value="<?= $data['USER']['EMAIL'] ?? '' ?>">
+                   value="<?= $email ?>">
 
             <div id="inputEmailHelpArea" class="form-text">
                 Введите корректный email который содержит знак '@'.
@@ -59,7 +67,7 @@
                    id="inputLoginField"
                    class="form-control d-inline"
                    aria-describedby="inputLoginHelpArea"
-                   value="<?= $data['USER']['LOGIN'] ?? '' ?>">
+                   value="<?= $login ?>">
             <div id="inputLoginHelpArea" class="form-text">
                 Логин должен быть уникальным и содержать от 4 до 16 латинских букв и цифр.
             </div>
@@ -80,6 +88,7 @@
                <input type="checkbox"
                       name="user-password-changed"
                       class="form-check-input"
+                      <?= $checked ?>
                       id="checkPasswordChange">
             </div>
         </div>
@@ -132,10 +141,18 @@
     <div class="row">
         <div class="col-md-12">
             <div class="list-inline-item d-flex justify-content-center mx-2s">
-                <div class="d-inline">
+                <div class="d-inline mx-2">
                     <a href="/user/">
                         <button type="button" class="d-inline btn btn-secondary btn-sm rounded-1 text-uppercase">
                             Список
+                        </button>
+                    </a>
+                </div>
+
+                <div class="d-inline mx-2">
+                    <a href="/user/edit/?id=<?= $user['ID'] ?>">
+                        <button type="button" class="d-inline btn btn-secondary btn-sm rounded-1 text-uppercase">
+                            Сбросить
                         </button>
                     </a>
                 </div>
