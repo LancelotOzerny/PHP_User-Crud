@@ -7,8 +7,8 @@
         return;
     }
 
-    $email = isset($data['UPDATE_DATA']) ? $data['UPDATE_DATA']['EMAIL'] : ($data['USER']['EMAIL'] ?? '');
-    $login = isset($data['UPDATE_DATA']) ? $data['UPDATE_DATA']['LOGIN'] : ($data['USER']['LOGIN'] ?? '');
+    $email = $data['UPDATE_DATA']['EMAIL'] ?? ($data['USER']['EMAIL'] ?? '');
+    $login = $data['UPDATE_DATA']['LOGIN'] ?? ($data['USER']['LOGIN'] ?? '');
     $checked = '';
     if (isset($data['UPDATE_DATA']) && $data['UPDATE_DATA']['PASSWORD_CHANGED'] === 'Y')
     {
