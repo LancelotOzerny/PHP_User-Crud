@@ -3,7 +3,7 @@
 ?>
 <div class="container">
     <div class="row col-12">
-        <p class="display-4 text-center py-5">CRUD (AJAX) пользователей</p>
+        <p class="display-4 text-center py-5">CRUD пользователей</p>
     </div>
 </div>
 
